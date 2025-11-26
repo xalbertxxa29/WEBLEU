@@ -5,13 +5,14 @@ import { TablaIncidencias } from '../components/TablaIncidencias';
 
 interface TablaPageProps {
   userName?: string;
+  onNavigate?: (page: 'dashboard' | 'tabla') => void;
 }
 
-export const TablaPage: React.FC<TablaPageProps> = ({ userName }) => {
+export const TablaPage: React.FC<TablaPageProps> = ({ userName, onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-light via-white to-light">
       {/* Sidebar */}
-      <Sidebar userName={userName} />
+      <Sidebar userName={userName} onNavigate={onNavigate} />
 
       {/* Main Content */}
       <main className="ml-0 p-4 sm:p-6 lg:p-8">

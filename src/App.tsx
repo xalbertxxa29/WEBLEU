@@ -46,7 +46,7 @@ function App() {
           {currentPage === 'dashboard' ? (
             <DashboardPage userName={user.email || 'Usuario'} onNavigate={setCurrentPage} />
           ) : (
-            <TablaPage userName={user.email || 'Usuario'} />
+            <TablaPage userName={user.email || 'Usuario'} onNavigate={setCurrentPage} />
           )}
         </>
       ) : (

@@ -67,36 +67,39 @@ export const Sidebar: React.FC<SidebarProps> = ({ userName, onNavigate }) => {
         initial={{ x: -300 }}
         animate={isOpen ? { x: 0 } : { x: -300 }}
         transition={{ type: 'spring', damping: 20 }}
-        className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-secondary to-secondary/90 shadow-2xl z-40 p-6"
+        className="fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-secondary to-secondary/90 shadow-2xl z-40 p-6 flex flex-col"
       >
-        <div className="mt-16 flex flex-col h-full">
-          {/* User Info */}
-          <div className="mb-8 pb-6 border-b border-white/20">
-            <p className="text-white/70 text-sm">Bienvenido</p>
-            <p className="text-white font-bold text-lg truncate">{userName || 'Usuario'}</p>
-          </div>
+        <div className="mt-16 flex flex-col h-full justify-between">
+          <div>
+            {/* User Info */}
+            <div className="mb-8 pb-6 border-b border-white/20">
+              <p className="text-white/70 text-sm">👤 Usuario</p>
+              <p className="text-white font-bold text-lg truncate">{userName || 'Usuario'}</p>
+            </div>
 
-          {/* Menu Items */}
-          <nav className="flex-1 space-y-2">
-            {menuItems.map((item) => (
-              <motion.button
-                key={item.label}
-                onClick={item.action}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 transition-colors group"
-                whileHover={{ x: 8 }}
-              >
-                <item.icon className="w-5 h-5 group-hover:text-primary transition-colors" />
-                <span>{item.label}</span>
-              </motion.button>
-            ))}
-          </nav>
+            {/* Menu Items */}
+            <nav className="space-y-3">
+              {menuItems.map((item) => (
+                <motion.button
+                  key={item.label}
+                  onClick={item.action}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/80 hover:bg-white/10 transition-all font-semibold group"
+                  whileHover={{ x: 8, backgroundColor: 'rgba(255,255,255,0.15)' }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <item.icon className="w-5 h-5 group-hover:text-primary transition-colors" />
+                  <span>{item.label}</span>
+                </motion.button>
+              ))}
+            </nav>
+          </div>
 
           {/* Logout Button */}
           <motion.button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-colors font-medium"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-xl bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 transition-all font-semibold shadow-lg mt-auto"
+            whileHover={{ scale: 1.03, boxShadow: '0 10px 25px rgba(239, 68, 68, 0.3)' }}
+            whileTap={{ scale: 0.95 }}
           >
             <LogOut className="w-5 h-5" />
             <span>Cerrar Sesión</span>
