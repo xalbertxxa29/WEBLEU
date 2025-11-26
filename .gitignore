@@ -1,7 +1,19 @@
-node_modules/
-dist/
-build/
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
 .env
 .env.local
-.DS_Store
-*.log
+.env.*.local
+

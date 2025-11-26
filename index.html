@@ -1,12 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEBLEU - Dashboard de Indicadores</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <img src="src/assets/logo_liberman.png" alt="Logo" class="logo">
+                    <h1>WEBLEU</h1>
+                    <p>Dashboard de Indicadores</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="tu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-large">Iniciar Sesión</button>
+                </form>
+                <div id="loginError" class="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="page">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <img src="src/assets/logo_liberman.png" alt="Logo" class="sidebar-logo">
+                <span class="logo-text">WEBLEU</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </button>
+                <button class="nav-btn" data-page="tabla">
+                    <span class="nav-icon">📋</span>
+                    Tabla
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Usuario</p>
+                        <p class="user-email" id="userEmail">usuario@email.com</p>
+                    </div>
+                </div>
+                <button id="logoutBtn" class="btn-logout">Salir</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Content -->
+            <section id="dashboardContent" class="content active">
+                <header class="page-header">
+                    <h2>Dashboard</h2>
+                    <div class="kpi-selector">
+                        <button class="kpi-btn active" data-kpi="facility">KPI FACILITY</button>
+                        <button class="kpi-btn" data-kpi="security">KPI SECURITY</button>
+                    </div>
+                </header>
+
+                <!-- KPI Facility Content -->
+                <div id="kpiFacility" class="kpi-content active">
+                    <!-- Indicators Cards -->
+                    <div class="indicators-grid">
+                        <div class="indicator-card">
+                            <div class="indicator-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)">📊</div>
+                            <div class="indicator-content">
+                                <p class="indicator-label">Total</p>
+                                <p class="indicator-value" data-indicator="total">0</p>
+                            </div>
+                        </div>
+                        <div class="indicator-card">
+                            <div class="indicator-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)">⚠️</div>
+                            <div class="indicator-content">
+                                <p class="indicator-label">Críticas</p>
+                                <p class="indicator-value" data-indicator="criticas">0</p>
+                            </div>
+                        </div>
+                        <div class="indicator-card">
+                            <div class="indicator-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">🔄</div>
+                            <div class="indicator-content">
+                                <p class="indicator-label">Activas</p>
+                                <p class="indicator-value" data-indicator="activas">0</p>
+                            </div>
+                        </div>
+                        <div class="indicator-card">
+                            <div class="indicator-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)">✅</div>
+                            <div class="indicator-content">
+                                <p class="indicator-label">Resueltas</p>
+                                <p class="indicator-value" data-indicator="resueltas">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3>Incidencias por Fecha</h3>
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Incidencias por Agente</h3>
+                            <canvas id="barChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Incidencias por Punto</h3>
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Security Content -->
+                <div id="kpiSecurity" class="kpi-content">
+                    <div class="placeholder-content">
+                        <p>KPI Security - Contenido en desarrollo</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tabla Content -->
+            <section id="tablaContent" class="content">
+                <header class="page-header">
+                    <h2>Incidencias</h2>
+                    <div class="tabla-controls">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar...">
+                    </div>
+                </header>
+
+                <div class="tabla-container">
+                    <table id="incidenciasTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Agente</th>
+                                <th>Punto</th>
+                                <th>Observación</th>
+                                <th>Evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Image Modal -->
+                <div id="imageModal" class="modal">
+                    <div class="modal-content">
+                        <button class="modal-close">&times;</button>
+                        <img id="modalImage" src="" alt="Evidencia">
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Center -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="app.js"></script>
+</body>
 </html>
